@@ -1,0 +1,27 @@
+s=list(map(int,input().split()))
+def sort_pysyrek(s):
+    k=len(s)
+    for i in range(k):
+        for j in raange(1,k):
+            if s[j]<s[j-1]:
+                s[j],s[j-1]=s[j-1],s[j]
+    return s
+
+def prost_choice(s):
+    def findmin(x, start):
+        mn = start
+        for i in range(start + 1, len(x)):
+            if x[i] < x[mn]:
+                mn = i
+                return mn
+    n = len(s)
+    for i in range(n - 1):
+        k=findmin(s,i) # находим номер минимального эл-та, начиная с текущего
+        s[i],s[k] = s[k],s[i] # меняем минимальный с текущим эл-том
+    return s
+            
+def sortirovka(s):
+    n=len(s)
+    
+    
+    
