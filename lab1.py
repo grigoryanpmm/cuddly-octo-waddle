@@ -9,7 +9,7 @@ def test(n):
             proverka=False
     return proverka
             
-def hours(hour):
+def hourss(hour):
     # функция, обрабатывающая часы 
     if hour==1 or hour==13:
         # если кол-во часов будет 1 или 13, создаем строку с количеством часов, и добавляем существительное час в соответствующей форме.
@@ -25,25 +25,27 @@ def hours(hour):
         hour_string=str(hour%12)+' часов '
     return hour_string
     # возвращаем строку с количеством часов
-def minutes(minu):
+def minutess(minu):
+    minu_string=''
     if 5<=minu<=20:
         #количество минут заканчивается от 5 до 20 -создаем строку с количеством минут, и добавляем существительное минута в соответствующей форме
-        minu_string=str(m)+' минут '
+        minu_string=str(minu)+' минут '
     elif minu==0:
         # если количество минут 0-создаем пустую строку
         minu_string=''
     elif minu%10==1 :
         #количество минут заканчивается на 1 -создаем строку с количеством минут, и добавляем существительное минута в соответствующей форме
-        minu_string=str(m)+' минута '
+        minu_string=str(minu)+' минута '
     elif 2<=(minu%10)<=4 :
         #количество минут заканчивается на 2-4 -создаем строку с количеством минут, и добавляем существительное минута в соответствующей форме
-        minu_string=str(m)+' минуты '
+        minu_string=str(minu)+' минуты '
     elif 5<=(minu%10)<=9 or (minu%10)==0:
         #количество минут заканчивается на 5-9 и 0 -создаем строку с количеством минут, и добавляем существительное минута в соответствующей форме
-        minu_string=str(m)+' минут '
+        minu_string=str(minu)+' минут '
     return minu_string
     # возвращаем строку с количеством минут
 def days(hour,minu):
+    hour_minu_string=''
     if not 0<=hour<24:
         # если кол-во часов находится не в пределе от 0 до 23, ввод неккоректен
         hour_minu_string='Введены недопустимые данные: часы должны быть от 0 до 23.'
@@ -58,15 +60,15 @@ def days(hour,minu):
         hour_minu_string='полдень' 
     elif 0<=hour<6:
         # если кол-во часов от 0 до 5- создаем строку с количеством часов и минут и добавляем 'ночи'
-        hour_minu_string=hours(hour)+minutes(minu)+'ночи'
+        hour_minu_string=hourss(hour)+minutess(minu)+'ночи'
     elif 6<=hour<12:
         # если кол-во часов от 6 до 11- создаем строку с количеством часов и минут и добавляем 'утра'
-        hour_minu_string=hours(hour)+minutes(minu)+'утра'
+        hour_minu_string=hourss(hour)+minutess(minu)+'утра'
     elif 12<=hour<18:
-        hour_minu_string=hours(hour)+minutes(minu)+'дня'
+        hour_minu_string=hourss(hour)+minutess(minu)+'дня'
         # если кол-во часов от 12 до 17- создаем строку с количеством часов и минут и добавляем 'дня'
     elif 18<=hour<24:
-        hour_minu_string=hours(hour)+minutes(minu)+'вечера'
+        hour_minu_string=hourss(hour)+minutess(minu)+'вечера'
         # если кол-во часов от 18 до 23- создаем строку с количеством часов и минут и добавляем 'вечера'
     if minu==0 and hour!=0 and hour!=12:
         # если кол-во минут-0 и кол-во часов не равно 0 и 12- добавляем к строке 'ровно'
@@ -97,3 +99,4 @@ else:
         print(days(hours,minutes))
         # выводим строку
     
+
