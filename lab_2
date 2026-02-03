@@ -42,87 +42,93 @@
 
 
 def bubble_sort(spis):
-    # Сортировка пузырьком
     swapped = True
-    # Устанавливаем флаг, цикл будет работать пока флаг в значении True
+    colvo_sravn=0
+    colvo_per=0
     while swapped:
         swapped = False
         for i in range(len(spis) - 1):
+            colvo_sravn+=1
             if spis[i] > spis[i + 1]:
+                colvo_per+=1
                 spis[i], spis[i + 1] = spis[i + 1], spis[i]
-                # Если последуйщий элемент меньше предыдущего, меняем местами
                 swapped = True
-                # Устанавливаем флаг в True для следующей итерации
+    print(f'При сортировке пузырьком {colvo_sravn} сравн. и {colvo_per} перест.')
     return spis
 
                 
 def findmin(spis, start):
-    # Функция для поиска минимального элемента
     mn = start
+    colvo_sravn=0
     for i in range(start + 1, len(spis)):
         if spis[i] < spis[mn]:
+            colvo_sravn+=1
             mn = i
-        # Если текущий элемент меньше минимального элемента, заменяем индекс мин элемента
-    return mn
+    return mn,colvo_sravn
 def prost_choice(spis):
-# Сортировка простым выбором
     n = len(spis)
+    colvo_per=0
+    colvo_sravn=0
     for i in range(n - 1):
-        min_el=findmin(spis,i)
-        # находим номер минимального эл-та, начиная с текущего
+        min_el,sravn=findmin(spis,i)
+        colvo_sravn+=sravn
+        colvo_per+=1
         spis[i],spis[min_el] = spis[min_el],spis[i]
-        # меняем минимальный с текущим эл-том
+    print(f'При сортировке простым выбором {colvo_sravn} сравн. и {colvo_per} перест.')
     return spis
 
     
                 
 def insertion_sort(spis):
-    # Сортировка вставками
-    # Сортировку начинаем со второго элемента, т.к. считается, что первый элемент уже отсортирован
+    colvo_sravn=0
+    colvo_per=0
     for i in range(1, len(spis)):
         item_to_insert = spis[i]
-        # Текущий элемент
         j = i - 1
-        # Сохраняем ссылку на индекс предыдущего элемента
         while j >= 0 and spis[j] > item_to_insert:
+            colvo_sravn+=1
             spis[j + 1] = spis[j]
             j -= 1
-        # Элементы отсортированного сегмента перемещаем вперёд, если они больше элемента для вставки
+        colvo_per+=1
         spis[j + 1] = item_to_insert
-        # Вставляем элемент
+    print(f'При сортировке вставками {colvo_sravn} сравн. и {colvo_per} перест.')
     return spis
-spis_input=input('Введите список чисел, который вы хотите отсортировать: ').split()
-# Вводим список чисел
-z=True
-spis_sort=[]
-for i in spis_input:
-    if not i.isdigit():
-        if i[0]!='-':
-            z=False
-        else:
-            if not i[1:].isdigit():
-                z=False
-        break
-# Проверяем корректность ввода
-if z==False:
-    print('Ввод неккоректен.')
-else:
-    spis_input=list(map(int,spis_input))
-    # Преобразуем элементы списка в целые значения
-    sort_choice=input('Выберите одну из 3 сортировок: сортировка пузырьком, сортировка простым выбором, сортировка вставками: ')
-    # Дает пользователю выбрать сортировку
-    if sort_choice=='сортировка пузырьком':
-        spis_sort=bubble_sort(spis_input)
-    elif sort_choice=='сортировка простым выбором':
-        spis_sort=prost_choice(spis_input)
-    elif sort_choice=='сортировка вставками':
-        spis_sort=insertion_sort(spis_input)
-    else:
-        print('Ввод неккоректен. Выберите нужную сортировку.')
-    # Сортируем список соответствующим методом, который выбрал пользователь 
-if len(spis_sort)!=0:
-    print(*spis_sort)
-# Выводим отсортированный список
 
-    
-    
+string_choice=input('Выберите режим работы программы: Нажмите 1 для демонстрационного режима, 2-для интерактивного: ')
+if string_choice!='1' and string_choice!='2':
+    print('Неккоректность ввода')
+elif string_choice=='1':
+    print(bubble_sort([45,-78,96,0,-33]))
+    print(prost_choice([45,-78,96,0,-33]))
+    print(insertion_sort([45,-78,96,0,-33]))
+elif string_choice=='2':
+    spis_input=input('Введите список чисел, который вы хотите отсортировать: ').split()
+    z=True
+    spis_sort=[]
+    for i in spis_input:
+        if not i.isdigit():
+            if i[0]!='-':
+                z=False
+            else:
+                if not i[1:].isdigit():
+                    z=False
+            break
+    if z==False:
+        print('Ввод неккоректен.')
+    else:
+        spis_input=list(map(int,spis_input))
+        sort_choice=input('Выберите одну из 3 сортировок: 1 если сортировка пузырьком, 2 если сортировка простым выбором, 3 если сортировка вставками: ')
+        if sort_choice=='1':
+            spis_sort=bubble_sort(spis_input)
+        elif sort_choice=='2':
+            spis_sort=prost_choice(spis_input)
+        elif sort_choice=='3':
+            spis_sort=insertion_sort(spis_input)
+        else:
+            print('Ввод неккоректен. Выберите нужную сортировку.')
+    if len(spis_sort)!=0:
+        print(*spis_sort)
+
+
+        
+        
