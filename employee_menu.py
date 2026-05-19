@@ -1,58 +1,8 @@
 from employee import Employee
 from datetime import date
+import csv
 
 employees_list=[]
-
-
-def correct_float(text):
-    while True:
-        try:
-            inputt=float(input(text))
-            if inputt<=0:
-                print("Число должно быть больше 0")
-                continue
-            return inputt
-        except ValueError:
-            print("Введите число")
-def correct_str(text):
-     while True:
-        inputt=input(text).strip()
-        if inputt:
-            if not inputt.isdigit():
-                return inputt
-            print('Ввод должен быть строковым значением')
-            continue
-        print("Текстовое значение не может быть пустым")
-def correct_date(text):
-     while True:
-        inputt=input(text).strip()
-        date_list=list(inputt.split())
-        try:
-            date_list=list(map(int,date_list))
-            return date(date_list[0],date_list[1],date_list[2])
-        except (ValueError,TypeError,IndexError):
-            print("Ввод должен состоять из 3 числовых значений. Месяц- число от 1 до 12, день- число от 1 до 365.")
-
-def save_to_file(filename):
-    with open(filename, 'w', encoding='utf-8') as f:
-        for p in employees_list:
-            f.write(p.to_string() + "\n")
-    print("Данные сохранены в текстовый файл.")
-    
-    
-
-def load_from_file(file_name):
-    with open(file_name,'r',encoding='UTF-8') as f:
-        for s in f:
-            if not s.strip():
-                continue
-            parts=s.strip().split(';')
-            employee=Employee(parts[0],parts[1],parts[2],float(parts[3]),datetime.strptime(parts[4]))
-            employees_list.append(employee)
-        print('Данные успешно загружены!')
-    return employees_list
-
-
 def conclusion():
     if not (employees_list):
         print('В БД ничего нет')
@@ -64,14 +14,14 @@ def conclusion():
 
 
 def add_employee():
-    name=correct_str('Введите ФИО сотрудника: ')
-    position = correct_str('Введите должность сотрудника: ')
-    section = correct_str('Введите отдел сотрудника: ')
-    salary = correct_float('Введите зарплату сотрудника в рублях: ')
-    appointment = correct_date('Введите дату приема сотрудника (перечислите год, месяц и день через пробел в формате 2024 5 26): ')
+    name=input('Введите ФИО сотрудника: ')
+    position = input('Введите должность сотрудника: ')
+    section = input('Введите отдел сотрудника: ')
+    salary = input('Введите зарплату сотрудника в рублях: ')
+    appointment = input('Введите дату приема сотрудника (перечислите год, месяц и день через пробел в формате 2024 5 26): ')
     employee=Employee(name,position,section,salary,appointment)
     employees_list.append(employee)
-    print(f'Сотрудник {employee.name} с ID {employee.id} добавлен в БД')
+    print(f'Сотрудник {name} с ID {employee.id} добавлен в БД')
 
 
 
@@ -93,7 +43,7 @@ def search():
                 found=True
 
     elif choice=='2':
-        salary=correct_float('Введите зарплату сотрудника в рублях: ')
+        salary=input('Введите зарплату сотрудника в рублях: ')
 
         for employee in employees_list:
             if employee.salary==salary:
@@ -125,16 +75,34 @@ def edit_employee():
     for employee in employees_list:
         if str(employee.id)==idd:
             print('Введите новые данные отрудника:')
-            planet.name=correct_str('ФИО: ')
-            planet.position=correct_str('Должность сотрудника: ')
-            planet.section=correct_str('Отдел сотрудника: ')
-            planet.salary=correct_float('Зарплата сотрудника в рублях: ')
-            planet.appointment=correct_date('Дата приема сотрудника (перечислите год, месяц и день через пробел в формате 2024 5 26) : ')
+            planet.name=input('ФИО: ')
+            planet.position=input('Должность сотрудника: ')
+            planet.section=input('Отдел сотрудника: ')
+            planet.salary=input('Зарплата сотрудника в рублях: ')
+            planet.appointment=input('Дата приема сотрудника (перечислите год, месяц и день через пробел в формате 2024 5 26) : ')
             print('Сотрудник изменен')
             return
     print("Такого ID нет в базе данных.")
 
 
+def save_to_file(filename):
+    with open(filename, 'w', encoding='utf-8') as f:
+        for p in employees_list:
+            f.write(p.to_string() + "\n")
+    print("Данные сохранены в текстовый файл.")
+    
+    
+
+def load_from_file(file_name):
+    with open(file_name,'r',encoding='UTF-8') as f:
+        for s in f:
+            if not s.strip():
+                continue
+            parts=s.strip().split(';')
+            employee=Employee(parts[0],parts[1],parts[2],float(parts[3]),datetime.strptime(parts[4]))
+            employees_list.append(employee)
+        print('Данные успешно загружены!')
+    return employees_list
 
 def sort_employees():
     if not employees_list:
@@ -165,15 +133,15 @@ def sort_employees():
 
 
 def export_to_csv():
-    file_name=input('Введите название файла для экспорта в CSV: ')
     headers=['id','name','position','section','salary','appointment']
-    if not file_name.endswith('.csv'):
-        file_name+='.csv'
-    with open(file_name, 'w', encoding='UTF-8') as file:
+    with open('employees_export.csv', 'w', encoding='UTF-8') as file:
         writer=csv.writer(file,delimiter=';')
         writer.writerow(headers)
-        writer.writerows(employees_list)
-    print(f"Данные упешно экспортированы в {file_name}")
+        for e in employees_list:
+            writer.writerow([employees_list.name, employees_list.position, employees_list.section, employees_list.salary,employees_list.appointment])
+    print(f"Данные упешно экспортированы в employees_export.csv")
+
+
 
 
 
