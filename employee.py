@@ -1,3 +1,4 @@
+from datetime import date
 class Employee():
     counter=0
     def __init__(self,name,position,section,salary,appointment):
@@ -9,6 +10,60 @@ class Employee():
         self.id=Employee.counter
         print(f"Создание сотрудника с ID: {self.id}")
         Employee.counter+=1
+
+
+    @property
+    def name(self):
+        return self.__name
+            
+    @name.setter
+    def name(self, value):
+        if value.isdigit() or len(value) == 0:
+            raise ValueError("Введите строковое значение, длина которого больше 0.")
+        self.__name = value
+
+    @property
+    def position(self):
+        return self.__position       
+
+    @position.setter    
+    def position(self, value):
+        if value.isdigit() or len(value) == 0:
+            raise ValueError("Введите строковое значение, длина которого больше 0.")
+        self.__position = value
+        
+
+    @property
+    def section(self):
+        return self.__section              
+
+    @section.setter
+    def section(self,value):
+        if value.isdigit() or len(value) == 0:
+            raise ValueError("Введите строковое значение, длина которого больше 0.")
+        self.__section = value
+    @property
+    def salary(self):
+        return self.__salary      
+
+    @salary.setter    
+    def salary(self,value):
+        if not value.isdigit() or int(value)<=0:
+            raise ValueError('вод должен быть числом большим чем 0')
+        self.__salary=int(value)
+
+    @property
+    def appointment(self, value):
+        return self.__appointment       
+
+    @appointment.setter    
+    def appointment(self, value):
+        parts=value.split()
+        if not(len(parts)==3 or all(part.isdigit() for part in parts)):
+            raise ValueError('"Ввод должен состоять из 3 числовых значений. Месяц- число от 1 до 12, день- число от 1 до 365."')
+        self.__appointment=date(int(parts[0]),int(parts[1]),int(parts[2]))
+
+    
 
     def __str__(self):
         output='Имя '+self.name+'\n'+'Должность '+self.position+'\n'+'Отдел '+self.section+'\n'+'Зарплата '+self.salary+'\n'+'Дата приема '+self.appointment+'\n'
@@ -60,4 +115,8 @@ class Employee():
         return self.appointment >= other.appointment
     def to_string(self):
         return f'{self.id};{self.name};{self.position};{self.section};{self.salary};{self.appointment}'
+    
+
+
+f.section};{self.salary};{self.appointment}'
     
