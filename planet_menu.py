@@ -2,7 +2,7 @@ from planet import Planet
 
 planets_list=[]
 
-
+'''
 def correct_float(text):
     while True:
         try:
@@ -22,7 +22,48 @@ def correct_str(text):
             print('Название планеты должно быть строковым значением')
             continue
         print("Текстовое значение не может быть пустым")
+'''
 
+def add_planet():
+    name=input('Введите название планеты: ')
+    radius = input('Введите радиус планеты в километрах: ')
+    mass = input('Введите массу планеты в килограммах: ')
+    distance = input('Введите расстояние от планеты до Солнца в километрах: ')
+    pl_type = input('Введите тип планеты: ')
+    planet=Planet(name,radius,mass,distance,pl_type)
+    planets_list.append(planet)
+    print(f'Планета {name} с ID {planet.id} добавлена в БД')
+
+def delete_planet():
+    idd=input('Введите ID планеты для удаления: ')
+    for planet in planets_list:
+        if str(planet.id) == idd:
+            planets_list.remove(planet)
+            print("Планета удалена из БД")
+            return
+    print("Введенного ID нет в БД")
+def edit_planet():
+    idd=input('Введите ID планеты для изменения параметров: ')
+    for planet in planets_list:
+        if str(planet.id)==idd:
+            print('Введите новые данные планеты:')
+            planet.name=input('Название: ')
+            planet.radius=input('Радиус в километрах:')
+            planet.mass=input('Масса в килограммах:')
+            planet.distance=input('Расстояние от планеты до Солнца в километрах:')
+            planet.pl_type=input('Тип планеты: ')
+            print('Планета изменена')
+            return
+    print("Такого ID нет в базе данных.")
+
+def conclusion():
+    if not (planets_list):
+        print('В БД ничего нет')
+    else:
+        for planet in planets_list:
+            print(planet)
+
+            
 def save_to_file(filename):
     with open(filename, 'w', encoding='utf-8') as f:
         for p in planets_list:
@@ -71,44 +112,7 @@ def sort_planets():
 
 
 
-def add_planet():
-    name=correct_str('Введите название планеты: ')
-    radius = correct_float('Введите радиус планеты в километрах: ')
-    mass = correct_float('Введите массу планеты в килограммах: ')
-    distance = correct_float('Введите расстояние от планеты до Солнца в километрах: ')
-    type = correct_str('Введите тип планеты: ')
-    planet=Planet(name,radius,mass,distance,type)
-    planets_list.append(planet)
-    print(f'Планета {planet.name} с ID {planet.id} добавлена в БД')
 
-def delete_planet():
-    idd=input('Введите ID планеты для удаления: ')
-    for planet in planets_list:
-        if str(planet.id) == idd:
-            planets_list.remove(planet)
-            print("Планета удалена из БД")
-            return
-    print("Введенного ID нет в БД")
-def edit_planet():
-    idd=input('Введите ID планеты для изменения параметров: ')
-    for planet in planets_list:
-        if str(planet.id)==idd:
-            print('Введите новые данные планеты:')
-            planet.name=correct_str('Название: ')
-            planet.radius=correct_float('Радиус в километрах:')
-            planet.mass=correct_float('Масса в килограммах:')
-            planet.distance=correct_float('Расстояние от планеты до Солнца в километрах:')
-            planet.type=correct_str('Тип планеты: ')
-            print('Планета изменена')
-            return
-    print("Такого ID нет в базе данных.")
-
-def conclusion():
-    if not (planets_list):
-        print('В БД ничего нет')
-    else:
-        for planet in planets_list:
-            print(planet)
 
 def menu():
     while True:
